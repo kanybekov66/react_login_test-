@@ -22,7 +22,7 @@ class MovieForm extends Component{
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Token 804b4b70243e43de8203316c26fe0208a79dc37a'
+                'Authorization': `Token ${this.props.token}`
             },
             body: JSON.stringify(this.state.editedMovie)
             }).then( response => response.json())
@@ -35,7 +35,7 @@ class MovieForm extends Component{
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Token 804b4b70243e43de8203316c26fe0208a79dc37a'
+                'Authorization': `Token ${this.props.token}`
             },
             body: JSON.stringify(this.state.editedMovie)
             }).then( response => response.json())
@@ -45,7 +45,8 @@ class MovieForm extends Component{
 
     render(){
 
-        // const isDisabled = 
+        const isDisabled = this.state.editedMovie.title.length === 0 || 
+                            this.state.editedMovie.description.length === 0 
 
         return(
             <React.Fragment>
@@ -53,8 +54,9 @@ class MovieForm extends Component{
                 <input type='text' name = 'title' value = {this.props.movie.title} onChange = {this.inputChanged}/><br/>
                 <span>Description</span><br/>
                 <textarea name = 'description' value = {this.props.movie.description} onChange = {this.inputChanged}/><br/>
-                { this.props.movie.id ? <button onClick = {this.updateClicked}>Update</button> 
-                : <button onClick = {this.saveClicked}>Save</button> }
+                { this.props.movie.id ?
+                <button disabled={isDisabled} onClick = {this.updateClicked}>Update</button> 
+                : <button disabled={isDisabled} onClick = {this.saveClicked}>Save</button> }
                 
                 <button onClick = {this.cancelClicked }>Cancel</button>
             </React.Fragment>
